@@ -1,63 +1,54 @@
 import React, { Component } from "react";
-import { Media } from "reactstrap";
+import {Card, CardImg , CardImgOverlay,CardText,CardBody,CardTitle} from 'reactstrap'
 
 class Menu extends Component {
   constructor(props) {
     super(props); //Supply props to super class i.e the parent class. The parent class exists in App.js (Always requried while creating a class component)
     // Creates a State which stores properties related to the component
     this.state ={
-        dishes:[ //dishes is an array of js objects as you can see
-            {
-                id: 0,
-                name:'Uthappizza',
-                image: 'assets/images/uthappizza.png',
-                category: 'mains',
-                label:'Hot',
-                price:'4.99',
-                description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.'                        },
-             {
-                id: 1,
-                name:'Zucchipakoda',
-                image: 'assets/images/zucchipakoda.png',
-                category: 'appetizer',
-                label:'',
-                price:'1.99',
-                description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce'                        },
-             {
-                id: 2,
-                name:'Vadonut',
-                image: 'assets/images/vadonut.png',
-                category: 'appetizer',
-                label:'New',
-                price:'1.99',
-                description:'A quintessential ConFusion experience, is it a vada or is it a donut?'                        },
-             {
-                id: 3,
-                name:'ElaiCheese Cake',
-                image: 'assets/images/elaicheesecake.png',
-                category: 'dessert',
-                label:'',
-                price:'2.99',
-                description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms'                        
-            }
-        ]
+      //Whenever we click on a dishes,then we will make the dish information equal to the selected dish
+        selectedDish : null
     }
   }
+
+  onDishSelect(dish){
+    //We need to use this.setState function call when we want to change the state. We cannot do selectedDish = dish
+    this.setState({selectedDish : dish});
+  }
+
+  renderDish(dish){
+    if(dish != null ){
+      return (
+        <Card>
+          <CardImg width='100%' src={dish.image} alt={dish.name} />
+          <CardBody>
+          <CardTitle>{dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+        );
+    }
+    else{
+      //We return an empty div so that nothing will be rendered here as we cannot return null
+      return (
+        <div></div>
+      )
+    }
+  }
+
   //Render method returns what needs to be displayed on th UI by this component
   render() {
-    const menu = this.state.dishes.map((dish) =>{
+    const menu = this.props.dishes.map((dish) =>{
         return(
              //Whenever we create a list in react every attribute requires a key  which helps react to recognize each of the elements
-             <div key={dish.id} className='col-12 mt-5'> 
-                <Media tag='li'>
-                    <Media left middle>
-                        <Media object src={dish.image} alt={dish.name} />
-                    </Media>
-                    <Media body className='ml-5'>
-                        <Media heading>{dish.name}</Media>
-                        <p>{dish.description}</p>
-                    </Media>
-                </Media>
+             // Bootstrap classes used here will display cards one below each other if on smaller screen, else will display them side by side
+             <div key={dish.id} className='col-12 col-md-5 m-1'> 
+                <Card onClick={() => this.onDishSelect(dish) }>
+                      <CardImg width='100%' src={dish.image} alt={dish.name} />
+                      <CardImgOverlay>
+                        <CardTitle>{dish.name}</CardTitle>
+                      </CardImgOverlay>
+                </Card>
             </div>
         );
     }) ;
@@ -65,12 +56,11 @@ class Menu extends Component {
       <div className="container">
            {/* Bootstrap 4 class which divides each row into a grid of 12 columns */}
            <div className="row">
-             {/* Displays  a list of items */}
-             <Media list>
-             {/* Just displays the content from the menu variable defined above */}
-                {menu} 
-            </Media>
-        </div>
+             {menu}
+          </div>
+          <div className='row'>
+            {this.renderDish(this.state.selectedDish)}
+          </div>
       </div>
     );
   }
