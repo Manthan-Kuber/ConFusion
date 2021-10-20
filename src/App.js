@@ -4,17 +4,17 @@ import "./App.css";
 import { DISHES } from "./shared/dishes";
 import { Component } from "react";
 
-
 class App extends Component {
   // We need to define the state in here for which we need a constructor to do so
-  constructor(props){
+  constructor(props) {
     super(props);
 
+    //Lifting the state up
     this.state = {
-      dishes : DISHES
+      dishes: DISHES,
     };
   }
-  render(){
+  render() {
     return (
       <div>
         <Navbar dark color="primary">

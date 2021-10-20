@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import {Card, CardImg , CardImgOverlay,CardText,CardBody,CardTitle} from 'reactstrap'
+import DishDetail from "./DishDetail";
 
 class Menu extends Component {
   constructor(props) {
-    super(props); //Supply props to super class i.e the parent class. The parent class exists in App.js (Always requried while creating a class component)
+    super(props); //Supply props to super class i.e the parent class(The component class is the parent class here)
     // Creates a State which stores properties related to the component
     this.state ={
       //Whenever we click on a dishes,then we will make the dish information equal to the selected dish
@@ -59,7 +60,7 @@ class Menu extends Component {
              {menu}
           </div>
           <div className='row'>
-            {this.renderDish(this.state.selectedDish)}
+          <DishDetail dishInfo = {this.state.selectedDish}/>
           </div>
       </div>
     );
