@@ -39,6 +39,7 @@ class Menu extends Component {
 
   //Render method returns what needs to be displayed on th UI by this component
   render() {
+    //What we render is called as a view
     const menu = this.props.dishes.map((dish) =>{
         return(
              //Whenever we create a list in react every attribute requires a key  which helps react to recognize each of the elements
@@ -59,8 +60,8 @@ class Menu extends Component {
            <div className="row">
              {menu}
           </div>
-          <div className='row'>
-          <DishDetail dishInfo = {this.state.selectedDish}/>
+          <div className="row">
+          <DishDetail dishInfo = {this.state.selectedDish} />
           </div>
       </div>
     );
