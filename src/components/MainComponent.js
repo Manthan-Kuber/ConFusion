@@ -4,6 +4,8 @@ import { Component } from "react";
 import DishDetail from "./DishDetail";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import Home from "./HomeComponent";
+import { Switch, Route, Redirect, Router } from "react-router-dom";
 
 class Main extends Component {
   // We need to define the state in here for which we need a constructor to do so
@@ -14,29 +16,27 @@ class Main extends Component {
     this.state = {
       //Whenever we click on a dishes,then we will make the dish information equal to the selected dish
       dishes: DISHES,
-      selectedDish: null,
     };
   }
-  onDishSelect(dishId) {
-    //We need to use this.setState function call when we want to change the state. We cannot do selectedDish = dish
-    this.setState({ selectedDish: dishId });
-  }
+
   render() {
+    const HomePage = () => {
+      return <Home />;
+    };
     return (
       <div>
-      <Header />
-        <Menu
-          dishes={this.state.dishes}
-          onClick={(dishId) => this.onDishSelect(dishId)}
-        />
-        {/* For Each Dish filter items such that Selected dish id === dish id */}
-        <DishDetail
-          dish={
-            this.state.dishes.filter(
-              (dish) => dish.id === this.state.selectedDish
-            )[0]
-          }
-        />
+        <Header />
+        {/* Enclose routes using switch */}
+          <Switch>
+              <Route path="/home" component={HomePage} />
+              {/* Using functional component so that we can pass props */}
+              <Route
+                exact
+                path=" /menu"
+                component={() => <Menu dishes={this.state.dishes} />}
+              />
+              <Redirect to="/home" />
+          </Switch>
         <Footer />
       </div>
     );
