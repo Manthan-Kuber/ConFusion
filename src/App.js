@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       //Enclosed return statement in between <BrowserRouter></BrowserRouter> to make use of react router
-      <BrowserRouter>x
+      <BrowserRouter>
       <div>
         <Main />
       </div>
