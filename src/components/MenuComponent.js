@@ -4,15 +4,20 @@ import {
   CardImg,
   CardImgOverlay,
   CardTitle,
+  Breadcrumb,
+  BreadcrumbItem
 } from "reactstrap";
+import {Link} from 'react-router-dom';
 
 function RenderMenuItem({ dish, onClick }) {
   return (
-    <Card onClick={() => onClick(dish.id)}>
+    <Card >
+       <Link to={`/menu/${dish.id}`} > {/* Using backtics to pass variable in a string */}
       <CardImg width="100%" src={dish.image} alt={dish.name} />
       <CardImgOverlay>
         <CardTitle>{dish.name}</CardTitle>
       </CardImgOverlay>
+      </Link>
     </Card>
   );
 }
@@ -31,7 +36,7 @@ const Menu = (props) => {
       //Whenever we create a list in react every attribute requires a key  which helps react to recognize each of the elements
       // Bootstrap classes used here will display cards one below each other if on smaller screen, else will display them side by side
       <div key={dish.id} className="col-12 col-md-5 m-1">
-        <RenderMenuItem dish={dish} onClick={props.onClick} />
+        <RenderMenuItem dish={dish}  />
       </div>
     );
   });
@@ -39,6 +44,16 @@ const Menu = (props) => {
   return (
     <div className="container">
       {/* Bootstrap 4 class which divides each row into a grid of 12 columns */}
+      <div className="row">
+        <Breadcrumb>
+        <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+        <BreadcrumbItem active>Menu</BreadcrumbItem>
+        </Breadcrumb>
+        </div>
+        <div className='col-12'>
+          <h3>Menu</h3>
+          <hr/>
+        </div>
       <div className="row">{menu}</div>
       <div className="row"></div>
     </div>
