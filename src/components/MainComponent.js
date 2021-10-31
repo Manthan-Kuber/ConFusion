@@ -10,6 +10,7 @@ import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import { Switch, Route, Redirect, Router } from "react-router-dom";
 import Contact from "./ContactComponent";
+import About from "./AboutComponent";
 
 class Main extends Component {
   // We need to define the state in here for which we need a constructor to do so
@@ -69,6 +70,7 @@ class Main extends Component {
           />
           <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/contactus" component={Contact} />
+          <Route exact path="/aboutus" component={() => <About leaders={this.state.leaders} />} />
           <Redirect to="/home" />
         </Switch>
         <Footer />

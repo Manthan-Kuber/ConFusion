@@ -28,9 +28,7 @@ function RenderDish({ dish }) {
 }
 
 function RenderComments({ comments }) {
-  console.log(comments)
   if (comments != null) {
-    console.log(comments);
     const cmnts = comments.map((comment) => {
       let myDate = new Date(comment.date);
       myDate = myDate.toLocaleString("en-US", {
