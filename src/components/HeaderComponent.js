@@ -3,7 +3,6 @@ import {
   Jumbotron,
   Navbar,
   Nav,
-  NavBarToggler,
   Collapse,
   NavItem,
   NavbarBrand,
@@ -33,7 +32,7 @@ class Header extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
   toggleNav() {
-    //We negate whaterver the state value maybe
+    //We negate whatever the state value maybe
     this.setState({
       isNavOpen: !this.state.isNavOpen,
     });
