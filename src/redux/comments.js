@@ -9,8 +9,8 @@ export const Comments = (state = COMMENTS, action) => {
       comment.id = state.length;
       comment.date = new Date().toISOString();
       //All state updates must be done immutably so we use concat() function to create a new object of the state(copy of the state) and push the new array values into the state array.In this way we modify the state values immutably as Redux expects
-      console.log('Comment',comment)
-      return [...state,comment]
+      console.log('Comment: ',comment)
+      return state.concat(comment);
       //Also this will only add values in array temporarily
 
     default:
