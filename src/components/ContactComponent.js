@@ -8,7 +8,7 @@ import {
   Row,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, Form, Errors , actions } from "react-redux-form";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -57,6 +57,7 @@ class Contact extends Component {
   handleSubmit(values) {
     console.log("Form Submitted. Current State is: " + JSON.stringify(values));
     alert("Form Submitted. Current State is: " + JSON.stringify(values));
+    this.props.resetFeedbackForm();
     // event.preventDefault();
     // event.preventDefault() prevents the default behaviour of the page being reloaded wehn the form is submitted
   }
@@ -180,7 +181,7 @@ class Contact extends Component {
           </div>
           <div className="col-12 col-md-9 mt-3">
             {/* Tie our form to use handle submit  */}
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
               <Row className="form-group">
                 {/* We use htmlfor instead of using the generic 'for' (in the same way as we used className instead of class) */}
                 <Label htmlfor="firstname" md={2}>
@@ -362,7 +363,7 @@ class Contact extends Component {
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </div>
         </div>
       </div>
