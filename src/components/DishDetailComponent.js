@@ -19,6 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { connect } from "react-redux";
+import { Loading } from "./LoadingComponent";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -43,7 +44,7 @@ function RenderDish({ dish }) {
 
 function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
-    console.log(comments)
+    console.log(comments);
     const cmnts = comments.map((comment) => {
       let myDate = new Date(comment.date);
       myDate = myDate.toLocaleString("en-US", {
@@ -97,8 +98,13 @@ class CommentForm extends Component {
   }
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.dishId,values.rating,values.author,values.comment);
-    console.log(this.props,'Current State is:' + JSON.stringify(values));
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
+    console.log(this.props, "Current State is:" + JSON.stringify(values));
   }
 
   render() {
@@ -197,10 +203,24 @@ class CommentForm extends Component {
 }
 
 const DishDetail = (props) => {
-  const dishDetails = props.tempComments.filter(dish => dish.dishId === props.dish.id)
-  const comments = [...props.comments , ...dishDetails]
-  console.log(comments)
-  if (props.dish != null) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  }
+  else if (props.dish != null) {
     return (
       <div className="container">
         <div className="row">
@@ -222,7 +242,7 @@ const DishDetail = (props) => {
           </div>
           <div className="col-12 col-md-5 m-1 ">
             <RenderComments
-              comments={[...props.comments,...dishDetails]}
+              comments={props.comments}
               addComment={props.addComment}
               dishId={props.dish.id}
             />
@@ -236,9 +256,7 @@ const DishDetail = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  tempComments : state.comments
-})
+  tempComments: state.comments,
+});
 
-export default connect(mapStateToProps,null)(DishDetail)
-
-
+export default connect(mapStateToProps, null)(DishDetail);
