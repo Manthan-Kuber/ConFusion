@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { connect } from "react-redux";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -40,8 +41,9 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
+    console.log(comments)
     const cmnts = comments.map((comment) => {
       let myDate = new Date(comment.date);
       myDate = myDate.toLocaleString("en-US", {
@@ -70,7 +72,7 @@ function RenderComments({ comments }) {
           <CardText>
             <ul class="list-unstyled">{cmnts}</ul>
           </CardText>
-          <CommentForm />
+          <CommentForm dishId={dishId} addComment={addComment} />
         </CardBody>
       </Card>
     );
@@ -94,8 +96,9 @@ class CommentForm extends Component {
     });
   }
   handleSubmit(values) {
-    console.log("Form Submitted. Current State is: " + JSON.stringify(values));
-    alert("Form Submitted. Current State is: " + JSON.stringify(values));
+    this.toggleModal();
+    this.props.addComment(this.props.dishId,values.rating,values.author,values.comment);
+    console.log(this.props,'Current State is:' + JSON.stringify(values));
   }
 
   render() {
@@ -104,20 +107,21 @@ class CommentForm extends Component {
         <Button outline onClick={this.toggleModal}>
           <span className="fa fa-pencil fa-lg"></span> Submit Comment
         </Button>
-        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
             <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <Row className="form-group">
-                <Label htmlFor="Rating" md={10}>
+                <Label htmlFor="rating" md={10}>
                   Rating
                 </Label>
                 <Col md={10}>
                   <Control.select
-                    model="rating"
+                    model=".rating"
                     className="form-control"
                     type="select"
                     name="rating"
+                    id="rating"
                   >
                     <option>1</option>
                     <option>2</option>
@@ -158,19 +162,32 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label htmlfor='comments' md={10}>Comment</Label>
+                <Label htmlfor="comment" md={10}>
+                  Comment
+                </Label>
                 <Col md={10}>
                   <Control.textarea
-                  model='.comments'
-                  className='form-control'
-                  type='textarea'
-                  id='message'
-                  name='message'
-                  rows='5'
-                   />
+                    model=".comment"
+                    className="form-control"
+                    type="textarea"
+                    id="comment"
+                    name="comment"
+                    rows="5"
+                    validators={{ required }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".comment"
+                    show="touched"
+                    messages={{
+                      required: "Required",
+                    }}
+                  />
                 </Col>
               </Row>
-              <Button type='submit' color='primary'>Submit</Button>
+              <Button type="submit" color="primary" onClick>
+                Submit
+              </Button>
             </LocalForm>
           </ModalBody>
         </Modal>
@@ -180,6 +197,9 @@ class CommentForm extends Component {
 }
 
 const DishDetail = (props) => {
+  const dishDetails = props.tempComments.filter(dish => dish.dishId === props.dish.id)
+  const comments = [...props.comments , ...dishDetails]
+  console.log(comments)
   if (props.dish != null) {
     return (
       <div className="container">
@@ -201,7 +221,11 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1 ">
-            <RenderComments comments={props.comments} />
+            <RenderComments
+              comments={[...props.comments,...dishDetails]}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
           </div>
         </div>
       </div>
@@ -211,4 +235,10 @@ const DishDetail = (props) => {
   }
 };
 
-export default DishDetail;
+const mapStateToProps = (state) => ({
+  tempComments : state.comments
+})
+
+export default connect(mapStateToProps,null)(DishDetail)
+
+

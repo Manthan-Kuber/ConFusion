@@ -8,16 +8,22 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import { connect } from "react-redux";
+import { addComment } from "../redux/ActionCreators";
 
 // This will map redux's store's state into props so that they become available to our component
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-      dishes: state.dishes,
-      comments: state.comments,
-      promotions:state.promotions,
-      leaders:state.leaders
-  }
-}
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment((dishId, rating, author, comment))),
+});
+
 class Main extends Component {
   // We need to define the state in here for which we need a constructor to do so
   constructor(props) {
@@ -29,7 +35,6 @@ class Main extends Component {
     // };
     // We removed state from here and now will obtain state information form the redux store
   }
-
 
   render() {
     const HomePage = () => {
@@ -53,6 +58,7 @@ class Main extends Component {
           comments={this.props.comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
+          addComment={this.props.addComment}
         />
       );
     };
@@ -84,4 +90,4 @@ class Main extends Component {
 }
 
 //Connect redux with main component. withRouter used to connect component to React Router
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Main));
