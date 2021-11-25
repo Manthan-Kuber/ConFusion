@@ -104,7 +104,7 @@ class Main extends Component {
       <div>
         <Header />
         <TransitionGroup>
-          {/* It's classNames and not className  */}
+          {/* It's classNames and not className for CSSTransistion component */}
           <CSSTransition
             key={this.props.location.key}
             classNames="page"

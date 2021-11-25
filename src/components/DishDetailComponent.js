@@ -21,6 +21,7 @@ import { Control, LocalForm, Errors } from "react-redux-form";
 import { connect } from "react-redux";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -29,13 +30,20 @@ const minLength = (len) => (val) => val && val.length >= len;
 function RenderDish({ dish }) {
   if (dish != null) {
     return (
-      <Card>
-        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-        <CardBody>
-          <CardTitle>{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
+      <FadeTransform
+        in
+        transformProps={{
+          exitTransform: "scale(0.5) translateY(-50%)",
+        }}
+      >
+        <Card>
+          <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+          <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+      </FadeTransform>
     );
   } else {
     //We return an empty div so that nothing will be rendered here as we cannot return null
@@ -72,7 +80,11 @@ function RenderComments({ comments, postComment, dishId }) {
             <h4>Comments</h4>
           </CardTitle>
           <CardText>
-            <ul class="list-unstyled">{cmnts}</ul>
+            <ul class="list-unstyled">
+              <Stagger in>
+                <Fade in>{cmnts}</Fade>
+              </Stagger>
+            </ul>
           </CardText>
           <CommentForm dishId={dishId} postComment={postComment} />
         </CardBody>
@@ -221,8 +233,7 @@ const DishDetail = (props) => {
         </div>
       </div>
     );
-  }
-  else if (props.dish != null) {
+  } else if (props.dish != null) {
     return (
       <div className="container">
         <div className="row">
