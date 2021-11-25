@@ -15,6 +15,7 @@ import {
   fetchPromos,
 } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 // This will map redux's store's state into props so that they become available to our component
 const mapStateToProps = (state) => {
@@ -102,30 +103,39 @@ class Main extends Component {
     return (
       <div>
         <Header />
-        {/* Enclose routes using switch */}
-        <Switch>
-          <Route path="/home" component={HomePage} />
-          {/* Using functional component so that we can pass props */}
-          <Route
-            exact
-            path="/menu"
-            component={() => <Menu dishes={this.props.dishes} />}
-          />
-          <Route path="/menu/:dishId" component={DishWithId} />
-          <Route
-            exact
-            path="/contactus"
-            component={() => (
-              <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
-            )}
-          />
-          <Route
-            exact
-            path="/aboutus"
-            component={() => <About leaders={this.props.leaders} />}
-          />
-          <Redirect to="/home" />
-        </Switch>
+        <TransitionGroup>
+          {/* It's classNames and not className  */}
+          <CSSTransition
+            key={this.props.location.key}
+            classNames="page"
+            timeout={300}
+          >
+            {/* Enclose routes using switch */}
+            <Switch>
+              <Route path="/home" component={HomePage} />
+              {/* Using functional component so that we can pass props */}
+              <Route
+                exact
+                path="/menu"
+                component={() => <Menu dishes={this.props.dishes} />}
+              />
+              <Route path="/menu/:dishId" component={DishWithId} />
+              <Route
+                exact
+                path="/contactus"
+                component={() => (
+                  <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                )}
+              />
+              <Route
+                exact
+                path="/aboutus"
+                component={() => <About leaders={this.props.leaders} />}
+              />
+              <Redirect to="/home" />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
