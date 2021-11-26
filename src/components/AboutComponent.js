@@ -5,12 +5,10 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardImg,
-  CardTitle,
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import {Fade,Stagger,FadeTransform} from 'react-animation-components';
+import {Fade,Stagger} from 'react-animation-components';
 import {baseUrl} from '../shared/baseUrl'
 
 function RenderLeader({ leader }) {
