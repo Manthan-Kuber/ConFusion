@@ -110,22 +110,23 @@ class CommentForm extends Component {
   }
   handleSubmit(values) {
     this.toggleModal();
-    this.props.postComment(
-      console.log(this.props),
-      this.props.dishId,
-      values.rating,
-      values.author,
-      values.comment
-    );
-    console.log(this.props, "Current State is:" + JSON.stringify(values));
+    // this.props.postComment(
+    //   console.log(this.props),
+    //   this.props.dishId,
+    //   values.rating,
+    //   values.author,
+    //   values.comment
+    // );
+    // console.log(this.props, "Current State is:" + JSON.stringify(values));
+    alert("Current State is:" + JSON.stringify(values));
   }
 
   render() {
     return (
       <>
-        <Button outline onClick={this.toggleModal}>
+        {/* <Button outline onClick={this.toggleModal}>
           <span className="fa fa-pencil fa-lg"></span> Submit Comment
-        </Button>
+        </Button> */}
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>

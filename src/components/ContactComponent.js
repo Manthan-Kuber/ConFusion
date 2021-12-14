@@ -58,9 +58,9 @@ class Contact extends Component {
   handleSubmit = (values) => {
     console.log("Form Submitted. Current State is: " + JSON.stringify(values));
     console.log(this.props);
-    // alert("Form Submitted. Current State is: " + JSON.stringify(values));
-    this.props.postFeedback(values);
-    this.props.resetFeedbackForm();
+    alert("Form Submitted. Current State is: " + JSON.stringify(values));
+    // this.props.postFeedback(values);
+    // this.props.resetFeedbackForm();
     // event.preventDefault();
     // event.preventDefault() prevents the default behaviour of the page being reloaded wehn the form is submitted
   }
