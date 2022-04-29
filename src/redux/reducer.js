@@ -1,7 +1,7 @@
 //We simplified the reducer by breasking it down into smaller reducers. Made a reducer for each js object i.e dishes,comments,promotions,leaders
 // So this file can be deleted 
 
-/*
+
 export const initialState = {
   dishes: DISHES,
   comments: COMMENTS,
@@ -14,4 +14,4 @@ export const Reducer = (state = initialState,action) =>{
     return state;
 };
 
-*/
+

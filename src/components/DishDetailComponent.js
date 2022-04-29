@@ -50,7 +50,7 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments, postComment, dishId }) {
+function RenderComments({ dish, comments, postComment, dishId }) {
   if (comments != null) {
     console.log(comments);
     const cmnts = comments.map((comment) => {
@@ -85,7 +85,12 @@ function RenderComments({ comments, postComment, dishId }) {
               </Stagger>
             </ul>
           </CardText>
-          <CommentForm dishId={dishId} postComment={postComment} />
+          <CommentForm
+            dish={dish}
+            dishId={dishId}
+            postComment={postComment}
+            comments={comments}
+          />
         </CardBody>
       </Card>
     );
@@ -110,23 +115,22 @@ class CommentForm extends Component {
   }
   handleSubmit(values) {
     this.toggleModal();
-    // this.props.postComment(
-    //   console.log(this.props),
-    //   this.props.dishId,
-    //   values.rating,
-    //   values.author,
-    //   values.comment
-    // );
-    // console.log(this.props, "Current State is:" + JSON.stringify(values));
+    this.props.postComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
+    console.log(this.props, "Current State is:" + JSON.stringify(values));
     alert("Current State is:" + JSON.stringify(values));
   }
 
   render() {
     return (
       <>
-        {/* <Button outline onClick={this.toggleModal}>
+        <Button outline onClick={this.toggleModal}>
           <span className="fa fa-pencil fa-lg"></span> Submit Comment
-        </Button> */}
+        </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
@@ -205,7 +209,7 @@ class CommentForm extends Component {
                   />
                 </Col>
               </Row>
-              <Button type="submit" color="primary" onClick>
+              <Button type="submit" color="primary">
                 Submit
               </Button>
             </LocalForm>

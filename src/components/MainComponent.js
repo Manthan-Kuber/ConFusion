@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   postComment: (dishId, rating, author, comment) =>
-    dispatch(postComment((dishId, rating, author, comment))),
+    dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
