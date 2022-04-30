@@ -71,6 +71,7 @@ class Main extends Component {
 
   render() {
     const HomePage = () => {
+      console.log(this.props.dishes);
       return (
         <Home
           dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
@@ -84,7 +85,7 @@ class Main extends Component {
           promosLoading={this.props.promotions.isLoading}
           promosErrMess={this.props.promotions.errMess}
           leader={
-            this.props.leaders.leaders.filter((leader) => leader.featured)[0]
+            this.props.leaders.leaders[0]
           }
           leaderLoading={this.props.leaders.isLoading}
           leaderErrMess={this.props.leaders.errMess}

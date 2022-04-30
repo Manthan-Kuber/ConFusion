@@ -21,7 +21,7 @@ export const ConfigureStore = () => {
         feedback: InitialFeedback
       }),
     }),
-    applyMiddleware(thunk, logger) //Passed as enhancers
+    applyMiddleware(thunk) //Passed as enhancers
   );
 
   return store;

@@ -47,6 +47,7 @@ function Home(props) {
                         isLoading={props.promosLoading}
                         errMess={props.promosErrMess} />
                 </div>
+                {console.log(props.leader)}
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.leader} 
                         isLoading={props.leaderLoading} 

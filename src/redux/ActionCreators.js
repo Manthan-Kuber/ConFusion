@@ -28,7 +28,7 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -53,11 +53,17 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
 export const fetchDishes = () => (dispatch) => {
   dispatch(dishesLoading(true));
 
-  return fetch(baseUrl + "dishes")
+  return fetch(baseUrl + "dishes",{
+    method:"GET",
+    headers:{
+      "Access-Control-Allow-Origin":"*",
+      "Accept":"*/*"
+    }
+  })
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -71,7 +77,10 @@ export const fetchDishes = () => (dispatch) => {
         throw errmess;
       }
     )
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return response;
+    })
     .then((dishes) => dispatch(addDishes(dishes)))
     .catch((error) => dispatch(dishesFailed(error.message)));
 };
@@ -91,11 +100,17 @@ export const addDishes = (dishes) => ({
 });
 
 export const fetchComments = () => (dispatch) => {
-  return fetch(baseUrl + "comments")
+  return fetch(baseUrl + "comments",{
+    method:"GET",
+    headers:{
+      "Access-Control-Allow-Origin":"*",
+      "Accept":"*/*"
+    }
+  })
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -109,7 +124,7 @@ export const fetchComments = () => (dispatch) => {
         throw errmess;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((comments) => dispatch(addComments(comments)))
     .catch((error) => dispatch(commentsFailed(error.message)));
 };
@@ -127,11 +142,17 @@ export const addComments = (comments) => ({
 export const fetchPromos = () => (dispatch) => {
   dispatch(promosLoading(true));
 
-  return fetch(baseUrl + "promotions")
+  return fetch(baseUrl + "promotions",{
+    method:"GET",
+    headers:{
+      "Access-Control-Allow-Origin":"*",
+      "Accept":"*/*"
+    }
+  })
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -145,7 +166,7 @@ export const fetchPromos = () => (dispatch) => {
         throw errmess;
       }
     )
-    .then((response) => response.json())
+    .then((response) => {return response})
     .then((promos) => dispatch(addPromos(promos)))
     .catch((error) => dispatch(promosFailed(error.message)));
 };
@@ -167,11 +188,17 @@ export const addPromos = (promos) => ({
 export const fetchLeaders = () => (dispatch) => {
   dispatch(leadersLoading());
 
-  return fetch(baseUrl + "leaders")
+  return fetch(baseUrl + "leaders",{
+    method:"GET",
+    headers:{
+      "Access-Control-Allow-Origin":"*",
+      "Accept":"*/*"
+    }
+  })
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -185,10 +212,13 @@ export const fetchLeaders = () => (dispatch) => {
         throw errmess;
       }
     )
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return response})
     .then((leaders) => {
-        console.log(leaders);
-        return dispatch(addLeaders(leaders))})
+      console.log(leaders);
+      return dispatch(addLeaders(leaders));
+    })
     .catch((error) => dispatch(leadersFailed(error.message)));
 };
 
@@ -218,7 +248,7 @@ export const postFeedback = (feedback) => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -231,7 +261,7 @@ export const postFeedback = (feedback) => (dispatch) => {
         throw error;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((response) => {
       console.log("Feedback", response);
       alert("Thank you for your feedback!\n" + JSON.stringify(response));
@@ -277,7 +307,7 @@ export const loginUser = (creds) => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -290,7 +320,7 @@ export const loginUser = (creds) => (dispatch) => {
         throw error;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((response) => {
       if (response.success) {
         // If login was successful, set the token in local storage
@@ -344,7 +374,7 @@ export const postFavorite = (dishId) => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -357,7 +387,7 @@ export const postFavorite = (dishId) => (dispatch) => {
         throw error;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((favorites) => {
       console.log("Favorite Added", favorites);
       dispatch(addFavorites(favorites));
@@ -378,7 +408,7 @@ export const deleteFavorite = (dishId) => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -391,7 +421,7 @@ export const deleteFavorite = (dishId) => (dispatch) => {
         throw error;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((favorites) => {
       console.log("Favorite Deleted", favorites);
       dispatch(addFavorites(favorites));
@@ -412,7 +442,7 @@ export const fetchFavorites = () => (dispatch) => {
     .then(
       (response) => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           var error = new Error(
             "Error " + response.status + ": " + response.statusText
@@ -426,7 +456,7 @@ export const fetchFavorites = () => (dispatch) => {
         throw errmess;
       }
     )
-    .then((response) => response.json())
+    .then((response) => response)
     .then((favorites) => dispatch(addFavorites(favorites)))
     .catch((error) => dispatch(favoritesFailed(error.message)));
 };
