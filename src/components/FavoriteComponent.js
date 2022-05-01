@@ -32,7 +32,7 @@ const Favorites = (props) => {
             </div>
         );
     }
-    else if (props.favorites.errMess) {
+    if (props.favorites.errMess) {
         return(
             <div className="container">
                 <div className="row">

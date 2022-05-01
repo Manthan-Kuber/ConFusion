@@ -94,12 +94,13 @@ class Main extends Component {
     };
 
     const DishWithId = ({ match }) => {
+      {console.log(this.props.dishes.dishes)}
       return this.props.auth.isAuthenticated ? (
         <DishDetail
           dish={
             this.props.dishes.dishes.filter(
               (dish) => dish._id === match.params.dishId
-            )[0]
+            )
           }
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
@@ -108,9 +109,6 @@ class Main extends Component {
           )}
           commentsErrMess={this.props.comments.errMess}
           postComment={this.props.postComment}
-          favorite={this.props.favorites.favorites.dishes.some(
-            (dish) => dish._id === match.params.dishId
-          )}
           postFavorite={this.props.postFavorite}
         />
       ) : (
@@ -118,7 +116,7 @@ class Main extends Component {
           dish={
             this.props.dishes.dishes.filter(
               (dish) => dish._id === match.params.dishId
-            )[0]
+            )
           }
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
@@ -127,8 +125,7 @@ class Main extends Component {
           )}
           commentsErrMess={this.props.comments.errMess}
           postComment={this.props.postComment}
-          favorite={false}
-          postFavorite={this.props.postFavorite}
+          
         />
       );
     };

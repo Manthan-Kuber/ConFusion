@@ -12,9 +12,10 @@ import { Loading } from "./LoadingComponent";
 import {baseUrl} from '../shared/baseUrl'
 
 function RenderMenuItem({ dish, onClick }) {
+  {console.log(dish)}
   return (
     <Card>
-      <Link to={`/menu/${dish.id}`}>
+      <Link to={`/menu/${dish._id}`}>
         {" "}
         {/* Using backtics to pass variable in a string */}
         <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
